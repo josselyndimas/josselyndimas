@@ -12,7 +12,9 @@ import html
 import json
 import os
 import re
+import struct
 import urllib.request
+import xml.dom.minidom
 from collections import defaultdict
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
@@ -120,6 +122,10 @@ def svg(w, h, title, body, defs=""):
 
 
 def save(name, content):
+    try:
+        xml.dom.minidom.parseString(content.encode("utf8"))
+    except Exception as exc:  # e.g. a raw "&" typed into a title
+        raise SystemExit(f"{name} is not valid SVG/XML ({exc}); nothing was written")
     (CARDS / name).write_text(content, encoding="utf8")
 
 
@@ -128,23 +134,36 @@ def text(x, y, s, size, fill, family=SANS, weight="normal", style="normal", anch
             f'font-style="{style}" text-anchor="{anchor}" letter-spacing="{spacing}" fill="{fill}">{esc(s)}</text>')
 
 
+def title(x, y, size, plain, italic):
+    return (f'<text x="{x}" y="{y}" font-family="{SERIF}" font-size="{size}" fill="{T["ink"]}">{esc(plain)}'
+            f'<tspan font-style="italic" fill="{T["accent"]}">{esc(italic)}</tspan></text>')
+
+
 # ---- hero -------------------------------------------------------------------
-portrait = base64.b64encode((ASSETS / "portrait-hero.png").read_bytes()).decode()
+# pencil-style portrait: assets/portrait-pencil-*.png (made by scripts/make_ascii_portrait.py)
+PW = 240                                          # displayed width; right margin = 900 - PX - PW
+PX = 590
+png = ASSETS / f"portrait-pencil-{os.environ.get('THEME', 'light')}.png"
+if not png.exists():
+    png = ASSETS / "portrait-pencil-light.png"
+im_w, im_h = struct.unpack(">II", png.read_bytes()[16:24])
+PH = round(PW * im_h / im_w)
+PY = round((400 - PH) / 2) + 6
+portrait = (f'<image x="{PX}" y="{PY}" width="{PW}" height="{PH}" '
+            f'xlink:href="data:image/png;base64,{base64.b64encode(png.read_bytes()).decode()}"/>')
 body = (
     f'<rect x="44" y="52" width="11" height="11" rx="2.5" fill="{T["accent"]}"/>'
     + text(66, 63, EYEBROW, 13, T["muted"], MONO, spacing=2)
     + text(40, 196, "Josselyn", 118, T["ink"], SERIF)
     + text(44, 284, "Dimas", 94, T["accent"], SERIF, style="italic")
     + text(46, 335, TAGLINE[0], 19, T["muted"]) + text(46, 361, TAGLINE[1], 19, T["muted"])
-    + text(46, 396, f"github.com/{USER}", 14, T["ink"], MONO)
-    + f'<image x="535" y="34" width="330" height="330" xlink:href="data:image/png;base64,{portrait}" '
-      f'preserveAspectRatio="xMidYMax meet" style="image-rendering:pixelated"/>'
+    + portrait
 )
-save("hero.svg", svg(900, 430, "Josselyn Dimas — Software Development Engineering student", body))
+save("hero.svg", svg(900, 400, "Josselyn Dimas — Software Development Engineering student", body))
 
 # ---- heatmap ----------------------------------------------------------------
 cell, gap, left, top = 12, 3, 52, 92
-body = (f'<text x="40" y="62" font-family="{SERIF}" font-size="27" fill="{T["ink"]}">Every day, <tspan font-style="italic" fill="{T["accent"]}">with coffee & code</tspan></text>'
+body = (title(40, 62, 27, "Every day, ", "with coffee & code")
         + text(860, 60, "REFRESHED DAILY", 11, T["muted"], MONO, anchor="end", spacing=2))
 if OK and ordered:
     first = ordered[0][0]
@@ -177,7 +196,7 @@ sums = defaultdict(int)
 for d, v in ordered:
     sums[(d.year, d.month)] += v["count"]
 peak = max([sums[k] for k in months] + [1])
-body = (f'<text x="40" y="62" font-family="{SERIF}" font-size="25" fill="{T["ink"]}">A year in <tspan font-style="italic" fill="{T["accent"]}">review</tspan></text>'
+body = (title(40, 62, 25, "A year in ", "review")
         + text(40, 86, "Contributions per month, last 12 months", 13, T["muted"]))
 base = 248
 for i, k in enumerate(months):
@@ -206,8 +225,7 @@ save("activity.svg", svg(900, 290, "Monthly GitHub activity", body))
 
 # ---- languages card ------------------------------------------------------------
 LANGS = [("Spanish", "Native"), ("English", "B2"), ("Portuguese", "A1")]
-body = (f'<text x="40" y="52" font-family="{SERIF}" font-size="27" fill="{T["ink"]}">Languages, '
-        f'<tspan font-style="italic" fill="{T["accent"]}">spoken</tspan></text>')
+body = title(40, 52, 27, "Languages, ", "spoken")
 for k, (name, level) in enumerate(LANGS):
     x = 40 + k * 280
     body += (f'<rect x="{x}" y="84" width="10" height="10" rx="2.5" fill="{T["accent"]}"/>'
