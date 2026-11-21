@@ -24,7 +24,7 @@ DATA.mkdir(exist_ok=True)
 
 USER = "josselyndimas"
 TAGLINE = ["I build useful software and turn ideas", "into practical solutions."]
-EYEBROW = "SOFTWARE DEVELOPMENT ENGINEERING STUDENT"
+EYEBROW = "SOFTWARE DEVELOPMENT ENGINEERING"
 
 # ---- palette ---------------------------------------------------------------
 FONDO, CHOCOLATE, CAFE, CAFE_MEDIO = "#171513", "#29221D", "#49382D", "#795D48"
@@ -144,7 +144,7 @@ save("hero.svg", svg(900, 430, "Josselyn Dimas — Software Development Engineer
 
 # ---- heatmap ----------------------------------------------------------------
 cell, gap, left, top = 12, 3, 52, 92
-body = (f'<text x="40" y="62" font-family="{SERIF}" font-size="27" fill="{T["ink"]}">Every day, <tspan font-style="italic" fill="{T["accent"]}">in coffee</tspan></text>'
+body = (f'<text x="40" y="62" font-family="{SERIF}" font-size="27" fill="{T["ink"]}">Every day, <tspan font-style="italic" fill="{T["accent"]}">with coffee & code</tspan></text>'
         + text(860, 60, "REFRESHED DAILY", 11, T["muted"], MONO, anchor="end", spacing=2))
 if OK and ordered:
     first = ordered[0][0]
