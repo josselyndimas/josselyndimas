@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 288 202" width="288" height="202" role="img" aria-label="LEARN"><rect width="288" height="202" rx="20" fill="#111923"/><rect x="1" y="1" width="286" height="200" rx="19" stroke="#263341" stroke-width="2" fill="none"/><style>
+    text{font-family:Arial,Helvetica,sans-serif} .muted{fill:#95aaa6} .bright{fill:#e8f0ec}
+    .enter{animation:appear .8s ease both} .spark{animation:spark 2s ease-in-out infinite}
+    .sq{animation:appear .35s ease both} .bar{transform-box:fill-box;transform-origin:50% 100%;animation:grow 1s cubic-bezier(.2,.8,.2,1) both}
+    @keyframes appear{from{opacity:0}to{opacity:1}} @keyframes grow{from{transform:scaleY(.03)}to{transform:scaleY(1)}}
+    @keyframes spark{50%{opacity:.3}} @media(prefers-reduced-motion:reduce){.sq,.bar,.enter,.spark{animation:none!important}}
+    </style><circle cx="27" cy="24" r="5" fill="#fa7474"/><circle cx="44" cy="24" r="5" fill="#e3b561"/><circle cx="61" cy="24" r="5" fill="#56e69b"/><text x="82" y="29" font-size="13" fill="#95aaa6">josselyn@github ~/ 02</text><text x="23" y="85" fill="#e1b48c" font-size="13" font-weight="bold">02 / KEEP EXPLORING</text><text x="22" y="130" fill="#e8f0ec" font-size="30" font-weight="bold" class="enter">LEARN</text><text x="22" y="160" fill="#95aaa6" font-size="13">Always curious, always growing</text><text x="253" y="160" fill="#e1b48c" font-size="23">↗</text></svg>
