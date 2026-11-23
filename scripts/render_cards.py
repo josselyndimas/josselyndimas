@@ -224,14 +224,14 @@ body += (stat(668, 78, "BUSIEST DAY", best["count"], best_sub) + stat(786, 78, "
 save("activity.svg", svg(900, 290, "Monthly GitHub activity", body))
 
 # ---- languages card ------------------------------------------------------------
-LANGS = [("Spanish", "Native"), ("English", "B2"), ("Portuguese", "A1")]
+LANGS = [("Spanish", "Native"), ("English", "C1"), ("Portuguese", "A1")]
 body = title(40, 52, 27, "Languages, ", "spoken")
 for k, (name, level) in enumerate(LANGS):
     x = 40 + k * 280
     body += (f'<rect x="{x}" y="84" width="10" height="10" rx="2.5" fill="{T["accent"]}"/>'
              + text(x + 20, 94, name.upper(), 12, T["muted"], MONO, spacing=2)
              + text(x, 140, level, 40, T["ink"], SERIF))
-save("languages.svg", svg(900, 170, "Languages: Spanish native, English B2, Portuguese A1", body))
+save("languages.svg", svg(900, 170, "Languages: Spanish native, English C1, Portuguese A1", body))
 
 print(f"Done. theme={os.environ.get('THEME', 'light')} data_ok={OK} total={total} active={active} "
       f"longest={longest} current={current}")

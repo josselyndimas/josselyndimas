@@ -6,7 +6,7 @@
 
 <img src="./cards/activity.svg" width="100%" alt="Contributions per month, busiest day and streaks" />
 
-<img src="./cards/languages.svg" width="100%" alt="Languages: Spanish native, English B2, Portuguese A1" />
+<img src="./cards/languages.svg" width="100%" alt="Languages: Spanish native, English C1, Portuguese A1" />
 
 <br />
 
