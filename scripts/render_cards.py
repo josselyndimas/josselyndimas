@@ -140,9 +140,9 @@ def title(x, y, size, plain, italic):
 
 
 # ---- hero -------------------------------------------------------------------
-# pencil-style portrait: assets/portrait-pencil-*.png (made by scripts/make_ascii_portrait.py)
-PW = 240                                          # displayed width; right margin = 900 - PX - PW
-PX = 590
+# pencil-style portrait: assets/portrait-pencil-*.png (made by scripts/make_pencil_sketch.py)
+PW = 300                                          # displayed width; right margin = 900 - PX - PW
+PX = 530
 png = ASSETS / f"portrait-pencil-{os.environ.get('THEME', 'light')}.png"
 if not png.exists():
     png = ASSETS / "portrait-pencil-light.png"
